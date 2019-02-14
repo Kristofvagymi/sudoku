@@ -71,7 +71,7 @@ function tryToComplete(){
 		type:"POST",
 		dataType:"json",
 		contentType: "application/json",
-		data:JSON.stringify({data: JSON.stringify(numbersInTable)}),
+		data:JSON.stringify({data: numbersInTable}),
 		url:"solve",
 	})
 	.done(function(response){
