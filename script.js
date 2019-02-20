@@ -46,23 +46,22 @@ function validateFields(){
 		for(var j = 0; j < 9; j++){
 			var inputField = $("#"+ (i*9+j));
 			if(inputField.val()==undefined){
-				var arrayObject = {sureValue:0};
-				numbersInTable[i][j] = arrayObject;
+				numbersInTable[i][j] = {sureValue:0};
 			} else if(!inputField.val().match(/^\d+$/)){
 				inputField.val("");
-				var arrayObject = {sureValue:0};
-				numbersInTable[i][j] = arrayObject;
+				numbersInTable[i][j] = {sureValue:0};
 			} else {
-				var arrayObject = {sureValue:Number(inputField.val())}
-				numbersInTable[i][j] = arrayObject;
+				numbersInTable[i][j] = {sureValue:Number(inputField.val())};
 			}
 		}
 	}
 	return numbersInTable;
 }
 
-function tryObviusSollution(numbersInTable){
-
+function writeBackToTable(responseData){
+	for(var i = 0; i < 9; i++)
+		for(var j = 0; j < 9; j++)
+			$("#"+ (i*9+j)).val(responseData[i][j].sureValue);
 }
 
 function tryToComplete(){
@@ -75,10 +74,10 @@ function tryToComplete(){
 		url:"solve",
 	})
 	.done(function(response){
-		  console.log("Response of update: ",response)
+		writeBackToTable(response.data);
 	})
 	.fail(function(xhr, textStatus, errorThrown){
-		  console.log("ERROR: ",xhr.responseText)
+		  console.log("ERROR: ",xhr.responseText);
 		  return xhr.responseText;
 	});
 }
